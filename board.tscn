@@ -47,4 +47,13 @@ anims/completed = SubResource( 1 )
 
 [node name="falling_tiles" type="Node2D" parent="."]
 
+[node name="monthly_timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[node name="annual_timer" type="Timer" parent="."]
+wait_time = 120.0
+one_shot = true
+autostart = true
+
 [connection signal="animation_finished" from="completed_animation" to="." method="_on_completed_animation_animation_finished"]

@@ -51,6 +51,19 @@ func _ready():
 	_game_state = GameState.STOPPED
 	_completed_lines = []
 
+	$monthly_timer.connect("timeout", self, "_on_monthly_timeout")
+	$annual_timer.connect("timeout", self, "_on_annual_timeout")
+
+func _on_monthly_timeout():
+	if _game_state == GameState.RUNNING:
+		print("Month passed")
+		_check_for_completed_lines(Buckets.MONTHLY)
+
+func _on_annual_timeout():
+	if _game_state == GameState.RUNNING:
+		print("Year passed")
+		_check_for_completed_lines(Buckets.ANNUALLY)
+
 func _set_size(value):
 	board_size = value
 
