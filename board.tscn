@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/tiles.tres" type="TileSet" id=2]
+[ext_resource path="res://sounds/background.ogg" type="AudioStream" id=3]
 
 [sub_resource type="Animation" id=1]
 resource_name = "completed"
@@ -25,7 +26,6 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-bucket_size = null
 
 [node name="board_tiles" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
@@ -55,5 +55,9 @@ autostart = true
 wait_time = 120.0
 one_shot = true
 autostart = true
+
+[node name="background_music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 3 )
+autoplay = true
 
 [connection signal="animation_finished" from="completed_animation" to="." method="_on_completed_animation_animation_finished"]
