@@ -25,6 +25,7 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+bucket_size = null
 
 [node name="board_tiles" type="TileMap" parent="."]
 tile_set = ExtResource( 2 )
@@ -35,6 +36,7 @@ tile_data = PoolIntArray( 0, 7, 0, 1, 7, 0, 2, 7, 0, 3, 7, 0, 4, 7, 0, 5, 7, 0, 
 
 [node name="completed_lines" type="TileMap" parent="."]
 modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -3, 0 )
 tile_set = ExtResource( 2 )
 cell_size = Vector2( 16, 16 )
 cell_custom_transform = Transform2D( 1, 0, 0, 1, 0, 0 )

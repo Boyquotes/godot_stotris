@@ -9,6 +9,7 @@
 script = ExtResource( 1 )
 
 [node name="board" parent="." instance=ExtResource( 2 )]
+bucket_size = null
 
 [node name="pause" parent="." instance=ExtResource( 3 )]
 visible = false

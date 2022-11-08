@@ -30,7 +30,6 @@ var _block_types = [
 ]
 
 export(Vector2) var board_size = Vector2(20, 29) setget _set_size
-export(Vector2) var bucket_size = Vector2(6, 29) setget _set_size
 
 var _block_queue
 
@@ -242,17 +241,25 @@ func _end_block():
 	_block = null
 
 	if _game_state == GameState.RUNNING:
-		_check_for_completed_lines()
+		_check_for_completed_lines(Buckets.DAILY)
 
-func _check_for_completed_lines():
-	for y in range(board_size.y, 0, -1):
+enum Buckets {
+	DAILY = 1,
+	MONTHLY = 8,
+	ANNUALLY = 15,
+}
+
+const BUCKET_SIZE = 6
+
+func _check_for_completed_lines(bucket):
+	for y in range(29, 20, -1):
 		var complete = true
-		for x in range(1, board_size.x + 1):
+		for x in range(bucket, bucket + BUCKET_SIZE):
 			if $board_tiles.get_cell(x, y) == -1:
 				complete = false
 				break
 		if complete:
-			_completed_lines.append(y)
+			_completed_lines.append([bucket, y])
 
 	_lines_left -= _completed_lines.size()
 	while _lines_left <= 0:
@@ -270,8 +277,11 @@ func _show_completed_lines():
 			COMPLETED_TILE_NAME)
 	assert(completed_tile != null)
 
-	for y in _completed_lines:
-		for x in range(1, board_size.x + 1):
+	for line_info in _completed_lines:
+		var bucket = line_info[0]
+		var y = line_info[1]
+
+		for x in range(bucket, bucket + BUCKET_SIZE):
 			$completed_lines.set_cell(x, y, completed_tile)
 	$completed_animation.play("completed")
 
@@ -281,13 +291,14 @@ func _on_completed_animation_animation_finished( anim_name ):
 	$completed_lines.clear()
 
 	while not _completed_lines.empty():
-		var current_y = _completed_lines.front()
+		var line_info = _completed_lines.pop_front()
+		var bucket = line_info[0]
+		var current_y = line_info[1]
 
-		_completed_lines.pop_front()
 		for i in range(_completed_lines.size()):
-			_completed_lines[i] += 1
+			_completed_lines[i][1] += 1
 
-		for x in range(1, board_size.x + 1):
+		for x in range(bucket, bucket + BUCKET_SIZE):
 			for y in range(current_y, 0, -1):
 				if y - 1 > 0:
 					var tile_above = $board_tiles.get_cell(x, y - 1)
