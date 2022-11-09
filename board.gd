@@ -31,6 +31,15 @@ var _block_types = [
 
 export(Vector2) var board_size = Vector2(20, 29) setget _set_size
 
+var stock_info = [
+	"[center][b]META[/b][/center]",
+	"[center]$96.47[/center]",
+	"[center][color=red]v -0.25 (0.26%)[/color][/center]",
+	"[center]Tech[/center]"
+]
+
+var _current_stock_info = 0
+
 var _block_queue
 
 var _block
@@ -180,9 +189,16 @@ func _control_block(move_left, move_right, move_down, rotate_ccw, rotate_cw):
 
 	if rotate_ccw:
 		rotate -= 1
+		_current_stock_info -= 1
+		if _current_stock_info < 0:
+			_current_stock_info = stock_info.size() - 1
 	if rotate_cw:
 		rotate += 1
+		_current_stock_info += 1
+		if _current_stock_info >= stock_info.size():
+			_current_stock_info = 0
 
+	$stock_info_label.bbcode_text = stock_info[_current_stock_info]
 	_move_block(move, rotate)
 
 func _spawn_block():
@@ -201,6 +217,8 @@ func _spawn_block():
 
 	var block_pos = Vector2(board_middle - block_middle + 1, 1)
 	_block.block_position = block_pos
+
+	$stock_info_label.bbcode_text = stock_info[_current_stock_info]
 
 	if not _is_block_space_empty(block_pos, 0):
 		_set_game_over()
