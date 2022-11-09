@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://board.gd" type="Script" id=1]
 [ext_resource path="res://tilesets/tiles.tres" type="TileSet" id=2]
 [ext_resource path="res://sounds/background.ogg" type="AudioStream" id=3]
 [ext_resource path="res://fonts/font_small.fnt" type="BitmapFont" id=4]
+[ext_resource path="res://addons/GDCharts/script.gd" type="Script" id=5]
 
 [sub_resource type="Animation" id=1]
 resource_name = "completed"
@@ -73,5 +74,12 @@ custom_fonts/italics_font = ExtResource( 4 )
 custom_fonts/bold_font = ExtResource( 4 )
 custom_fonts/normal_font = ExtResource( 4 )
 bbcode_enabled = true
+
+[node name="chart" type="ReferenceRect" parent="."]
+margin_left = 39.0
+margin_top = 54.0
+margin_right = 316.0
+margin_bottom = 175.0
+script = ExtResource( 5 )
 
 [connection signal="animation_finished" from="completed_animation" to="." method="_on_completed_animation_animation_finished"]
